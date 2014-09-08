@@ -1,17 +1,16 @@
 Lab 1: Simple Calculator
 ===
 ### Clayton Jaksha
-
 ### ECE 382
 
 
-#### Objective and Purpose
+### Objective and Purpose
 
-## Objective
+# Objective
 
 The objective of this lab is to produce a simple calculator in assemply code that can read a series of instructions programmed into ROM, perform the desired operations, and write the results to a location in RAM.
 
-## Purpose
+# Purpose
 
 The purpose is to develop familiarity with the assembly instructions for the MSP430 family and to begin designing larger, more complex instruction sets.
 
