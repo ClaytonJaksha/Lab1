@@ -17,6 +17,56 @@ The purpose is to develop familiarity with the assembly instructions for the MSP
 
 ![alt text](http://i.imgur.com/yfCbwaz.png "Flowchart")
 
+### Pseudocode
+
+##### Addition
+```
+operand1+=operand2;
+if operand1>255 then:
+	operand1=255;
+	end if;
+store operand1 in 0(myResults);
+myResults+=1;
+```
+#### Subtraction
+```
+operand1-=operand2;
+if operand1<0 then:
+	operand1=0;
+	end if;
+store operand1 in 0(myResults);
+myResults+=1;
+```
+#### Multiplication
+```
+n=1;
+while n<8:
+	if bit n in operand2==1:
+		product+=operand1;
+		end if;
+	arithmetic shift left operand1;
+	n+=1;
+	end while;
+if product>255:
+	product=255;
+	end if;
+store product in 0(myResults);
+operand1=product;
+myResults+=1;
+```
+#### Clear
+```
+store 0 in 0(myResults);
+operand1=operand2;
+myResults+=1;
+```
+#### End Op
+```
+n=0;
+while n==0:
+	end while;
+```
+
 ## Code Walkthrough
 
 ```				
