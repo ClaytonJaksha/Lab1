@@ -4,8 +4,6 @@ Lab 1: Simple Calculator
 ### ECE 382
 
 
-### Objective and Purpose
-
 # Objective
 
 The objective of this lab is to produce a simple calculator in assemply code that can read a series of instructions programmed into ROM, perform the desired operations, and write the results to a location in RAM.
