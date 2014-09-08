@@ -1,7 +1,6 @@
 Lab 1: Simple Calculator
 ===
-#### Clayton Jaksha
-#### ECE 382
+#### Clayton Jaksha | ECE 382 | Dr. York | M2A
 
 ## Objective and Purpose
 ### Objective
@@ -11,6 +10,12 @@ The objective of this lab is to produce a simple calculator in assemply code tha
 ### Purpose
 
 The purpose is to develop familiarity with the assembly instructions for the MSP430 family and to begin designing larger, more complex instruction sets.
+
+## Preliminary Design
+
+## Flowchart/Pseudocode
+
+## Code Walkthrough
 
 ```				
 			.text
@@ -205,3 +210,12 @@ overflow		mov.b	#255, 0(r11)
             .sect   ".reset"                ; MSP430 RESET Vector
             .short  RESET
 ```
+
+## Debugging
+
+## Testing Methodology/Results
+
+## Observations and Conclusion
+
+## Documentation
+##### None
