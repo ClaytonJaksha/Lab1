@@ -7,11 +7,19 @@ Lab 1: Simple Calculator
 
 #### Objective and Purpose
 
+## Objective
 
-```				.text
+The objective of this lab is to produce a simple calculator in assemply code that can read a series of instructions programmed into ROM, perform the desired operations, and write the results to a location in RAM.
+
+## Purpose
+
+The purpose is to develop familiarity with the assembly instructions for the MSP430 family and to begin designing larger, more complex instruction sets.
+
+```				
+			.text
 myProgram:		.byte		0x22, 0x11, 0x22, 0x22, 0x33, 0x33, 0x08, 0x44, 0x08, 0x22, 0x09, 0x44, 0xff, 0x11, 0xff, 0x44, 0xcc, 0x33, 0x02, 0x33, 0x00, 0x44, 0x33, 0x33, 0x08, 0x55
 
-				.data
+			.data
 myResults:		.space		20
 
 ADD_OP:			.equ		0x11
@@ -24,7 +32,8 @@ MUL_OP:			.equ		0x33
 
 
 
-```;---This portion of the code reads the first three terms of the programs, placing them in the appropriate registers. Then it jumps to the first operation.
+```
+;---This portion of the code reads the first three terms of the programs, placing them in the appropriate registers. Then it jumps to the first operation.
 ;---The program pointer is put in r7, the first operand is placed in r8, the operation in r9, the second operand in r10, and the results pointer is put in r11.
 
 				mov.w	#myProgram, r7
@@ -45,7 +54,8 @@ MUL_OP:			.equ		0x33
 				jeq		multiply
 ```
 
-```;---This is the main loop the caclulator works from. It increments the pointers, pressing the program forward, and determines what operation to perform next.
+```
+;---This is the main loop the caclulator works from. It increments the pointers, pressing the program forward, and determines what operation to perform next.
 nextup			incd	r7
 				inc		r11
 				mov.b	0(r7), r9
@@ -63,7 +73,8 @@ nextup			incd	r7
 				jmp		nextup
 ```
 
-```;----------ADDITION------------
+```
+;----------ADDITION------------
 ;---This section is fairly straightforward; it adds the two operands, stores the result, and then moves the result into the first operand for the next operation.
 ;---Also, if the sum ends up greater than 255, it have overflow capabilities in place to produce 0xff as the result.
 addition		add.w	r8, r10
@@ -77,7 +88,8 @@ twofiftyfive	mov.b	#255, 0(r11)
 				jmp		nextup
 ```
 
-```;------------SUBTRACTION-----------
+```
+;------------SUBTRACTION-----------
 ;---Like the addition section, this portion of the code is fairly easy to read since there is a built-in assembly instruction (emulated) for subtraction.
 ;---First, it compares the two operands and if it's going to produce a negative result then it automatically stores 0 as the answer.
 subtraction		cmp 	r8, r10
@@ -91,19 +103,22 @@ zeero			mov.b 	#0, 0(r11)
 ```
 
 
-```;--------CLEAR--------------------
+```
+;--------CLEAR--------------------
 ;---Another simple function: stores a 0 as the result and loads the second operand as the first operand for the next operation.
 clearop			mov.b 	#0, 0(r11)
 				mov.w	r10, r8
 				jmp 	nextup
 ```
 
-```;--------------ENDOP----------------
+```
+;--------------ENDOP----------------
 ;---When this is the operation, it simply traps the CPU, effectively ending the program.
 endop			jmp 	endop
 ```
 
-```;---------------MULTIPLY-------------
+```
+;---------------MULTIPLY-------------
 ;---This opertion is the most complicated, but it can be scaled up O[log n], making it useful for large values.
 ;---It multiplies the first operand by the second operand by checking in what places there is a '1' in the second operand, then shifting the first operand that many places and adding up
 ;------all of the shifted values.
@@ -132,7 +147,8 @@ multiply		mov.w	r10, r5
 				mov.b	r13, 0(r11)
 ```
 
-```;---this loop the meat of the work for multiplying. It checks the 2nd through 7th bits for '1's and, if they're present, adds that value of shift of the first operand to the total prodcut.
+```
+;---this loop the meat of the work for multiplying. It checks the 2nd through 7th bits for '1's and, if they're present, adds that value of shift of the first operand to the total prodcut.
 ;---it also checks for overflow. If any value goes over #255, then it will trigger the overflow loop.
 multiploop		rla.w	r8
 				mov.w	r10, r5
@@ -150,7 +166,8 @@ multiploop		rla.w	r8
 				jmp		multiploop
 ```
 
-```;---Once the tracker bit is at the 8th bit, we move to the final loop which can initiate exiting the loop and another overflow process should and overflow occur on the last bit.
+```
+;---Once the tracker bit is at the 8th bit, we move to the final loop which can initiate exiting the loop and another overflow process should and overflow occur on the last bit.
 final_loop		rla.w	r8
 				mov.w	r10, r5
 				and.w	#0x0080, r5
@@ -165,12 +182,14 @@ final_loop		rla.w	r8
 				jmp		nextup
 ```
 
-```;---this small portion of code sets the product as the first operand for the next operation and jumps back to the main loop
+```
+;---this small portion of code sets the product as the first operand for the next operation and jumps back to the main loop
 done				mov.b	@r11, r8
 				jmp		nextup
 ```
 
-```;---if at any time the loop detects and overflow, the value #0xff will be moved into the product and we return to the main loop
+```
+;---if at any time the loop detects and overflow, the value #0xff will be moved into the product and we return to the main loop
 overflow		mov.b	#255, 0(r11)
 				mov.w	#255, r8
 				jmp		nextup
