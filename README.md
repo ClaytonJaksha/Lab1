@@ -15,6 +15,8 @@ The purpose is to develop familiarity with the assembly instructions for the MSP
 
 ## Flowchart/Pseudocode
 
+![alt text](http://i.imgur.com/yfCbwaz.png "Flowchart")
+
 ## Code Walkthrough
 
 ```				
