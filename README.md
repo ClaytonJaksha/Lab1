@@ -184,7 +184,7 @@ The simplest portion of the code. When the program jumps here, we trap the CPU a
 ```
 ;--------------ENDOP----------------
 ;---When this is the operation, it simply traps the CPU, effectively ending the program.
-endop			jmp	endop
+endop			jmp		endop
 ```
 #### Multiply
 This is the most complicated block of the larger code, I will break it up in order to make it more readable. Comments in the code can help clarify what specific registers are doing. My general process is to shift-add the first operand by wherever there are '1's in the second operand.
@@ -276,8 +276,25 @@ overflow		mov.b	#255, 0(r11)
 
 
 ## Debugging
+Primary debugging was done through iterative and line-by-line testing. By examining each register and memory location after an instruction was executed, I was able to hunt down pesky inconsistencies and mitigate them. There were no major code overhauls. No issues requiring debugging exist in the current version of the code.
 
 ## Testing Methodology/Results
+[Three test cases](http://ece382.com/labs/lab1/test_cases.html) are provided on the [ECE 382 Website](http://ece382.com/). The tests and results are found below. Each test was implemented by loading the string of values into `myProgram` and then looking at `myResults` to compare with the results given on the website
+#### C Functionality
+For this test, I loaded `0x11, 0x11, 0x11, 0x11, 0x11, 0x44, 0x22, 0x22, 0x22, 0x11, 0xCC, 0x55` into `myProgram`. I received the following back:
+
+This matches the approved solution of: `0x22, 0x33, 0x00, 0x00, 0xCC`.
+
+#### B Functionality
+For this test, I loaded `0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0xDD, 0x44, 0x08, 0x22, 0x09, 0x44, 0xFF, 0x22, 0xFD, 0x55` into `myProgram`. I received the following back:
+
+This matches the approved solution of: `0x22, 0x33, 0x44, 0xFF, 0x00, 0x00, 0x00, 0x02`.
+
+#### A Functionality
+For this test, I loaded `0x22, 0x11, 0x22, 0x22, 0x33, 0x33, 0x08, 0x44, 0x08, 0x22, 0x09, 0x44, 0xff, 0x11, 0xff, 0x44, 0xcc, 0x33, 0x02, 0x33, 0x00, 0x44, 0x33, 0x33, 0x08, 0x55` into `myProgram`. I received the following back:
+
+This matches the approved solution of: `0x44, 0x11, 0x88, 0x00, 0x00, 0x00, 0xff, 0x00, 0xff, 0x00, 0x00, 0xff`.
+
 
 ## Observations and Conclusion
 
