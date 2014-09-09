@@ -123,7 +123,7 @@ After initializing the registers, the code determines which operation to perform
 This loop, `nextup`, is the "home base" if you will for the code. After every operation, the program jumps back to here, increments the pointers, and gets busy deciding what operation to do next.
 ```
 ;---This is the main loop the caclulator works from. It increments the pointers, pressing the program forward, and determines what operation to perform next.
-nextup				incd	r7
+nextup			incd	r7
 				inc		r11
 				mov.b	0(r7), r9
 				mov.b	1(r7), r10
@@ -145,13 +145,13 @@ The addition loop makes use of the add.w instruction to perform the actual arith
 ;----------ADDITION------------
 ;---This section is fairly straightforward; it adds the two operands, stores the result, and then moves the result into the first operand for the next operation.
 ;---Also, if the sum ends up greater than 255, it have overflow capabilities in place to produce 0xff as the result.
-addition			add.w	r8, r10
+addition		add.w	r8, r10
 				cmp	#255, r10
 				jge	twofiftyfive
 				mov.b	r10, 0(r11)
 				mov.w	r10, r8
 				jmp	nextup
-twofiftyfive			mov.b	#255, 0(r11)
+twofiftyfive		mov.b	#255, 0(r11)
 				mov.w	#255, r8
 				jmp	nextup
 ```
@@ -161,12 +161,12 @@ The MSP430 has an emulated subtraction instruction `sub[.w]` that I make use of 
 ;------------SUBTRACTION-----------
 ;---Like the addition section, this portion of the code is fairly easy to read since there is a built-in assembly instruction (emulated) for subtraction.
 ;---First, it compares the two operands and if it's going to produce a negative result then it automatically stores 0 as the answer.
-subtraction			cmp 	r8, r10
+subtraction		cmp 	r8, r10
 				jge 	zeero
 				sub.w 	r10, r8
 				mov.b 	r8, 0(r11)
 				jmp 	nextup
-zeero				mov.b 	#0, 0(r11)	;why is there an extra 'e' in zero? I don't have a good reason.
+zeero			mov.b 	#0, 0(r11)	;why is there an extra 'e' in zero? I don't have a good reason.
 				mov.w 	#0, r8
 				jmp 	nextup
 ```
@@ -175,7 +175,7 @@ This portion of the code simply stores zero as the result and loads the second o
 ```
 ;--------CLEAR--------------------
 ;---Another simple function: stores a 0 as the result and loads the second operand as the first operand for the next operation.
-clearop				mov.b 	#0, 0(r11)
+clearop			mov.b 	#0, 0(r11)
 				mov.w	r10, r8
 				jmp 	nextup
 ```
@@ -207,7 +207,7 @@ This first portion is essentially the first iteration of the loop that follows i
 ;------r12: unused.
 ;------r13: temporarily holds the word-sized value of the sum of the shifted values; I use this register to check for overflow since it holds a whole word rather than just a byte.
 ;---The part of the operation here initializes the tracker bit and checks the first bit for a '1' and, if there is one, adds the unshifted value of the first operand to the total product.
-multiply			mov.w	r10, r5
+multiply		mov.w	r10, r5
 				clr.b	0(r11)
 				mov.w	#0x0001, r6		;---the tracker bit is initialized at #0x0001, then moves to #0x0002, #0x0004, #0x0008, #0x0010, ... , #0x0080.
 				and.w	r6, r5
@@ -225,7 +225,7 @@ The loop starts out by shifting the second operand left; if the nth value of the
 ```
 ;---this loop does the meat of the work for multiplying. It checks the 2nd through 7th bits for '1's and, if they're present, adds that value of shift of the first operand to the total prodcut.
 ;---it also checks for overflow. If any value goes over #255, then it will trigger the overflow loop.
-multiploop			rla.w	r8
+multiploop		rla.w	r8
 				mov.w	r10, r5
 				and.w	r6, r5
 				rla.w	r6
@@ -244,7 +244,7 @@ multiploop			rla.w	r8
 This iteration essentially does the same thing as the main loop, except it adds a `done` jump that signals the program that we are done with the program and this loop is unnecessary. This would be the case whenever there is a not a '1' in the 0x0080 bit of the second operand. We check for overflow here as well.
 ```
 ;---Once the tracker bit is at the 8th bit, we move to the final loop which can initiate exiting the loop and another overflow process should and overflow occur on the last bit.
-final_loop			rla.w	r8
+final_loop		rla.w	r8
 				mov.w	r10, r5
 				and.w	#0x0080, r5
 				tst	r5
@@ -261,14 +261,14 @@ final_loop			rla.w	r8
 If the code detects we are done with shift-adding, we move the given result into the first operand (for the next operation) and jump back to `nextup`.
 ```
 ;---this small portion of code sets the product as the first operand for the next operation and jumps back to the main loop
-done				mov.b	@r11, r8
+done			mov.b	@r11, r8
 				jmp	nextup
 ```
 ###### Part 5: Overflow
 If at any shift-add, the value exceeds `0xFF`, the program will jump here and `0xFF` gets stored as the result. Then, the program jumps to the next command.
 ```
 ;---if at any time the loop detects and overflow, the value #0xff will be moved into the product and we return to the main loop
-overflow			mov.b	#255, 0(r11)
+overflow		mov.b	#255, 0(r11)
 				mov.w	#255, r8
 				jmp	nextup
 ```
