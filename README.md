@@ -79,7 +79,7 @@ while n==0:
 #### Memory Locations
 This first portion of the code saves space in ROM for `myProgram`, from which the lower portions of code will draw its commands.
 
-The portion after `.data` reserves 20 bytes of space in RAM under the label `myProgram`. After reserving this space, I assign labels to the different operations so the code below is more readable.
+The portion after `.data` reserves 20 bytes of space in RAM under the label `myResults`. After reserving this space, I assign labels to the different operations so the code below is more readable.
 ```				
 				.text
 myProgram:		.byte		0x22, 0x11, 0x22, 0x22, 0x33, 0x33, 0x08, 0x44, 0x08, 0x22, 0x09, 0x44, 0xff, 0x11, 0xff, 0x44, 0xcc, 0x33, 0x02, 0x33, 0x00, 0x44, 0x33, 0x33, 0x08, 0x55
