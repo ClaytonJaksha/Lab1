@@ -10,23 +10,23 @@
             .cdecls C,LIST,"msp430.h"       ; Include device header file
 
 ;-------------------------------------------------------------------------------
-            .text                           ; Assemble into program memory
-            .retain                         ; Override ELF conditional linking
+            			.text                           ; Assemble into program memory
+            			.retain                         ; Override ELF conditional linking
                                             ; and retain current section
-            .retainrefs                     ; Additionally retain any sections
+            			.retainrefs                     ; Additionally retain any sections
                                             ; that have references to current
                                             ; section
 				.text
-myProgram:		.byte		0x22, 0x11, 0x22, 0x22, 0x33, 0x33, 0x08, 0x44, 0x08, 0x22, 0x09, 0x44, 0xff, 0x11, 0xff, 0x44, 0xcc, 0x33, 0x02, 0x33, 0x00, 0x44, 0x33, 0x33, 0x08, 0x55
+myProgram:			.byte		0x22, 0x11, 0x22, 0x22, 0x33, 0x33, 0x08, 0x44, 0x08, 0x22, 0x09, 0x44, 0xff, 0x11, 0xff, 0x44, 0xcc, 0x33, 0x02, 0x33, 0x00, 0x44, 0x33, 0x33, 0x08, 0x55
 
 				.data
-myResults:		.space		20
+myResults:			.space		20
 
-ADD_OP:			.equ		0x11
-SUB_OP:			.equ		0x22
-CLR_OP:			.equ		0x44
-END_OP:			.equ		0x55
-MUL_OP:			.equ		0x33
+ADD_OP:				.equ		0x11
+SUB_OP:				.equ		0x22
+CLR_OP:				.equ		0x44
+END_OP:				.equ		0x55
+MUL_OP:				.equ		0x33
 ;-------------------------------------------------------------------------------
 RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
 StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
