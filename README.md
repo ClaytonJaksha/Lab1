@@ -15,13 +15,14 @@ The purpose is to develop familiarity with the assembly instructions for the MSP
 My initial design, outlined below in the flowchart and section pseudocode, loops through each command by loading the operands, picking the appropriate operation to work from, loading the result into memory and the next operation, and incrementing memory and program pointers.
 
 ## Flowchart/Pseudocode
-
+### Flowchart
+The flowchart represents an initial interpretation of how to implement the calculator. The general idea and most test loops are still true in the final code, though they may not appear exactly as they do here.
 ![alt text](http://i.imgur.com/yfCbwaz.png "Flowchart")
 
 ### Pseudocode
-
+The general idea for each mathematical operation is laid out in pseudocode here in terms of `operand1` and `operand 2`. These two values will appear in registers when the code is fully implemented.
 ##### Addition
-Since the MSP430 has an addition command, this process is extremely simple. Operand1 holds the sum at the end and the result is also stored wherever `myResults` points. If the difference is greater than 255, the answer will be 255. `myResults` is incremented at the end to advance it forward in memory.
+Since the MSP430 has an addition command, this process is extremely simple. `operand1` holds the sum at the end and the result is also stored wherever `myResults` points. If the difference is greater than 255, the answer will be 255. `myResults` is incremented at the end to advance it forward in memory.
 ```
 operand1+=operand2;
 if operand1>255 then:
@@ -31,7 +32,7 @@ store operand1 in 0(myResults);
 myResults+=1;
 ```
 #### Subtraction
-Since the MSP430 has an emulated subtraction command, this process is fairly simple. Operand1 holds the difference at the end and the result is also stored wherever `myResults` points. If the difference is less than zero, the answer will be zero.
+Since the MSP430 has an emulated subtraction command, this process is fairly simple. `operand1` holds the difference at the end and the result is also stored wherever `myResults` points. If the difference is less than zero, the answer will be zero.
 ```
 operand1-=operand2;
 if operand1<0 then:
@@ -41,7 +42,7 @@ store operand1 in 0(myResults);
 myResults+=1;
 ```
 #### Multiplication
-This piece of code aims to multiply operand1 and operand 2 with an O[logx] process and will store the result wherever the `myResults` pointer points along with updating the first operand. Additionally, it checks for overflow and will account for that if necessary.
+This piece of code aims to multiply `operand1` and `operand 2` with an O[logx] process and will store the result wherever the `myResults` pointer points along with updating the first operand. Additionally, it checks for overflow and will account for that if necessary.
 ```
 n=1;
 while n<8:
@@ -59,7 +60,7 @@ operand1=product;
 myResults+=1;
 ```
 #### Clear
-This code is simple, it stores a zero into memory as the result and then loads operand2 as the next operand1 to be worked from.
+This code is simple, it stores a zero into memory as the result and then loads `operand2` as the next `operand1` to be worked from.
 ```
 store 0 in 0(myResults);
 operand1=operand2;
@@ -282,17 +283,17 @@ Primary debugging was done through iterative and line-by-line testing. By examin
 [Three test cases](http://ece382.com/labs/lab1/test_cases.html) are provided on the [ECE 382 Website](http://ece382.com/). The tests and results are found below. Each test was implemented by loading the string of values into `myProgram` and then looking at `myResults` to compare with the results given on the website
 #### C Functionality
 For this test, I loaded `0x11, 0x11, 0x11, 0x11, 0x11, 0x44, 0x22, 0x22, 0x22, 0x11, 0xCC, 0x55` into `myProgram`. I received the following back:
-
+![alt text](http://i.imgur.com/BrU4DFl.png "C Functionality")
 This matches the approved solution of: `0x22, 0x33, 0x00, 0x00, 0xCC`.
 
 #### B Functionality
 For this test, I loaded `0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0xDD, 0x44, 0x08, 0x22, 0x09, 0x44, 0xFF, 0x22, 0xFD, 0x55` into `myProgram`. I received the following back:
-
+![alt text](http://i.imgur.com/rfo9HIx.png "B Functionality")
 This matches the approved solution of: `0x22, 0x33, 0x44, 0xFF, 0x00, 0x00, 0x00, 0x02`.
 
 #### A Functionality
 For this test, I loaded `0x22, 0x11, 0x22, 0x22, 0x33, 0x33, 0x08, 0x44, 0x08, 0x22, 0x09, 0x44, 0xff, 0x11, 0xff, 0x44, 0xcc, 0x33, 0x02, 0x33, 0x00, 0x44, 0x33, 0x33, 0x08, 0x55` into `myProgram`. I received the following back:
-
+![alt text](http://i.imgur.com/Jk68Y8Y.png "A Functionality")
 This matches the approved solution of: `0x44, 0x11, 0x88, 0x00, 0x00, 0x00, 0xff, 0x00, 0xff, 0x00, 0x00, 0xff`.
 
 
