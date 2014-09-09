@@ -22,6 +22,7 @@ My initial design, outlined below in the flowchart and section pseudocode, loops
 ### Pseudocode
 
 ##### Addition
+Since the MSP430 has an addition command, this process is extremely simple. Operand1 holds the sum at the end and the result is also stored wherever `myResults` points. If the difference is greater than 255, the answer will be 255. `myResults` is incremented at the end to advance it forward in memory.
 ```
 operand1+=operand2;
 if operand1>255 then:
@@ -31,6 +32,7 @@ store operand1 in 0(myResults);
 myResults+=1;
 ```
 #### Subtraction
+Since the MSP430 has an emulated subtraction command, this process is fairly simple. Operand1 holds the difference at the end and the result is also stored wherever `myResults` points. If the difference is less than zero, the answer will be zero.
 ```
 operand1-=operand2;
 if operand1<0 then:
@@ -40,6 +42,7 @@ store operand1 in 0(myResults);
 myResults+=1;
 ```
 #### Multiplication
+This piece of code aims to multiply operand1 and operand 2 with an O[logx] process and will store the result wherever the `myResults` pointer points along with updating the first operand. Additionally, it checks for overflow and will account for that if necessary.
 ```
 n=1;
 while n<8:
@@ -57,12 +60,14 @@ operand1=product;
 myResults+=1;
 ```
 #### Clear
+This code is simple, it stores a zero into memory as the result and then loads operand2 as the next operand1 to be worked from.
 ```
 store 0 in 0(myResults);
 operand1=operand2;
 myResults+=1;
 ```
 #### End Op
+`END_OP` will trap the processor at the end of the code.
 ```
 n=0;
 while n==0:
