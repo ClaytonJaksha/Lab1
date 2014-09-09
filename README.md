@@ -162,13 +162,13 @@ The MSP430 has an emulated subtraction instruction `sub[.w]` that I make use of 
 ;---Like the addition section, this portion of the code is fairly easy to read since there is a built-in assembly instruction (emulated) for subtraction.
 ;---First, it compares the two operands and if it's going to produce a negative result then it automatically stores 0 as the answer.
 subtraction		cmp 	r8, r10
-				jge 		zeero
+				jge 	zeero
 				sub.w 	r10, r8
 				mov.b 	r8, 0(r11)
-				jmp 		nextup
+				jmp 	nextup
 zeero			mov.b 	#0, 0(r11)	;why is there an extra 'e' in zero? I don't have a good reason.
 				mov.w 	#0, r8
-				jmp 		nextup
+				jmp 	nextup
 ```
 #### Clear
 This portion of the code simply stores zero as the result and loads the second operand as the first operand for the next operation.
