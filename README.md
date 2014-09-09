@@ -297,6 +297,10 @@ This matches the approved solution of: `0x44, 0x11, 0x88, 0x00, 0x00, 0x00, 0xff
 
 
 ## Observations and Conclusion
+#### Observations
+* Generalizing a program with a flowchart or pseudocode helps cut back on the 'guesswork' and compartmentalizes the work that must be done
+* Using emulated instructions and labels makes coding easier to do and easier to read
+* Multiplication can be performed on an O[logx] scale
 
 ## Documentation
 ##### None
