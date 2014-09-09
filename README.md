@@ -177,14 +177,14 @@ This portion of the code simply stores zero as the result and loads the second o
 ;---Another simple function: stores a 0 as the result and loads the second operand as the first operand for the next operation.
 clearop			mov.b 	#0, 0(r11)
 				mov.w	r10, r8
-				jmp 		nextup
+				jmp 	nextup
 ```
 #### End Op
 The simplest portion of the code. When the program jumps here, we trap the CPU and nothing else gets done.
 ```
 ;--------------ENDOP----------------
 ;---When this is the operation, it simply traps the CPU, effectively ending the program.
-endop				jmp 		endop
+endop			jmp	endop
 ```
 #### Multiply
 This is the most complicated block of the larger code, I will break it up in order to make it more readable. Comments in the code can help clarify what specific registers are doing. My general process is to shift-add the first operand by wherever there are '1's in the second operand.
