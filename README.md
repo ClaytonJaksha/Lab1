@@ -308,6 +308,7 @@ This matches the approved solution of: `0x44, 0x11, 0x88, 0x00, 0x00, 0x00, 0xff
 * Generalizing a program with a flowchart or pseudocode helps cut back on the 'guesswork' and compartmentalizes the work that must be done
 * Using emulated instructions and labels makes coding easier to do and easier to read
 * Multiplication can be performed on an O[logx] scale
+
 #### Conclusion
 I was able to effectively program a calculator in assembly bode where we program a set of commands into ROM, read the commands, execute the commands, then sotre the reuslts into RAM. The weakness with this calculator is that it <i>does not</i> follow order of operations, it merely reads from left-to-right conducting operations without regard for order. It did, however, meet the required operational effectiveness and met the design objectives.
 
