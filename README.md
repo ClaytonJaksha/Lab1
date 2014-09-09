@@ -13,6 +13,8 @@ The purpose is to develop familiarity with the assembly instructions for the MSP
 
 ## Preliminary Design
 
+My initial design, outlined below in the flowchart and section pseudocode, loops through each command by loading the operands, picking the appropriate operation to work from, loading the result into memory and the next operation, and incrementing memory and program pointers.
+
 ## Flowchart/Pseudocode
 
 ![alt text](http://i.imgur.com/yfCbwaz.png "Flowchart")
